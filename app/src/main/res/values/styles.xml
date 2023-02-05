@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
  Copyright 2014 The Android Open Source Project
 
@@ -15,11 +15,7 @@
  limitations under the License.
 -->
 <resources>
-    <string name="open_app_usage_setting">Open Apps with usage access settings</string>
-    <string name="last_time_used">"Last time used: "</string>
-    <string name="time_span">"Time span: "</string>
-    <string name="explanation_access_to_appusage_is_not_enabled">Failed to retrieve app usage
-        statistics. You may need to enable access
-        for this app through Settings > Security > Apps with usage access
-    </string>
+    <style name="PackageNameFont" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">#000000</item>
+    </style>
 </resources>
