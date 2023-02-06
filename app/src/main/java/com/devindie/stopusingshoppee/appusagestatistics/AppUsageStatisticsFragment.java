@@ -35,6 +35,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,22 +92,21 @@ public class AppUsageStatisticsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View rootView, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View rootView, Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
 
         mUsageListAdapter = new UsageListAdapter();
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_app_usage);
+        mRecyclerView = rootView.findViewById(R.id.recyclerview_app_usage);
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setAdapter(mUsageListAdapter);
-        mOpenUsageSettingButton = (Button) rootView.findViewById(R.id.button_open_usage_setting);
-        mSpinner = (Spinner) rootView.findViewById(R.id.spinner_time_span);
+        mOpenUsageSettingButton = rootView.findViewById(R.id.button_open_usage_setting);
+        mSpinner = rootView.findViewById(R.id.spinner_time_span);
         SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.action_list, android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinnerAdapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            String[] strings = getResources().getStringArray(R.array.action_list);
+            final String[] strings = getResources().getStringArray(R.array.action_list);
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -115,7 +115,7 @@ public class AppUsageStatisticsFragment extends Fragment {
                 if (statsUsageInterval != null) {
                     List<UsageStats> usageStatsList =
                             getUsageStatistics(statsUsageInterval.mInterval);
-                    Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
+                    usageStatsList.sort(new LastTimeLaunchedComparatorDesc());
                     updateAppsList(usageStatsList);
                 }
             }
@@ -174,9 +174,8 @@ public class AppUsageStatisticsFragment extends Fragment {
             CustomUsageStats customUsageStats = new CustomUsageStats();
             customUsageStats.usageStats = usageStatsList.get(i);
             try {
-                Drawable appIcon = getActivity().getPackageManager()
+                customUsageStats.appIcon = getActivity().getPackageManager()
                         .getApplicationIcon(customUsageStats.usageStats.getPackageName());
-                customUsageStats.appIcon = appIcon;
             } catch (PackageManager.NameNotFoundException e) {
                 Log.w(TAG, String.format("App Icon is not found for %s",
                         customUsageStats.usageStats.getPackageName()));

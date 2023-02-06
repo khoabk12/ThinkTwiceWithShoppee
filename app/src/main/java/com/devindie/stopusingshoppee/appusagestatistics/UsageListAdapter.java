@@ -38,7 +38,7 @@ import java.util.List;
 public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.ViewHolder> {
 
     private List<CustomUsageStats> mCustomUsageStatsList = new ArrayList<>();
-    private DateFormat mDateFormat = new SimpleDateFormat();
+    private final DateFormat mDateFormat = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -50,9 +50,9 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
 
         public ViewHolder(View v) {
             super(v);
-            mPackageName = (TextView) v.findViewById(R.id.textview_package_name);
-            mLastTimeUsed = (TextView) v.findViewById(R.id.textview_last_time_used);
-            mAppIcon = (ImageView) v.findViewById(R.id.app_icon);
+            mPackageName = v.findViewById(R.id.textview_package_name);
+            mLastTimeUsed = v.findViewById(R.id.textview_last_time_used);
+            mAppIcon = v.findViewById(R.id.app_icon);
         }
 
         public TextView getLastTimeUsed() {

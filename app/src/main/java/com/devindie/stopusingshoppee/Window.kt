@@ -19,18 +19,16 @@ class Window(context: Context) {
 
     init {
         this.context = context
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // set the layout parameters of the window
-            mParams = WindowManager.LayoutParams( // Shrink the window to wrap the content rather
-                // than filling the screen
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,  // Display it on top of other application windows
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  // Don't let it grab the input focus
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  // Make the underlying application window visible
-                // through any transparent parts
-                PixelFormat.TRANSLUCENT
-            )
-        }
+        // set the layout parameters of the window
+        mParams = WindowManager.LayoutParams( // Shrink the window to wrap the content rather
+            // than filling the screen
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,  // Display it on top of other application windows
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,  // Don't let it grab the input focus
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,  // Make the underlying application window visible
+            // through any transparent parts
+            PixelFormat.TRANSLUCENT
+        )
         // getting a LayoutInflater
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         // inflating the view with the custom layout we created
@@ -50,8 +48,8 @@ class Window(context: Context) {
         try {
             // check if the view is already
             // inflated or present in the window
-            if (mView.getWindowToken() == null) {
-                if (mView.getParent() == null) {
+            if (mView.windowToken == null) {
+                if (mView.parent == null) {
                     mWindowManager.addView(mView, mParams)
                 }
             }
@@ -67,7 +65,7 @@ class Window(context: Context) {
             // invalidate the view
             mView.invalidate()
             // remove all views
-            (mView.getParent() as ViewGroup).removeAllViews()
+            (mView.parent as ViewGroup).removeAllViews()
 
             // the above steps are necessary when you are adding and removing
             // the view simultaneously, it might give some exceptions
