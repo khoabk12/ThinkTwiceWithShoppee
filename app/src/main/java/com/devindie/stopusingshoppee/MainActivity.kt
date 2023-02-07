@@ -4,9 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.devindie.stopusingshoppee.appusagestatistics.AppUsageStatisticsFragment
+
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE = -1010101
@@ -23,7 +25,21 @@ class MainActivity : AppCompatActivity() {
 
         //Test Overlay
         checkOverlayPermission()
-        startOverlayService()
+//        startOverlayService()
+
+        checkOptimizingBattery()
+    }
+
+    private fun checkOptimizingBattery() {
+        val intent = Intent()
+        val packageName = packageName
+        val pm = getSystemService(POWER_SERVICE) as PowerManager
+        if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+            intent.data = Uri.parse("package:$packageName")
+            startActivity(intent)
+        }
+
     }
 
     private fun startOverlayService() {

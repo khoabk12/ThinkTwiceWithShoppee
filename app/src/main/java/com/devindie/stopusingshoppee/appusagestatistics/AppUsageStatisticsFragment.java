@@ -36,6 +36,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,7 +82,7 @@ public class AppUsageStatisticsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mUsageStatsManager = (UsageStatsManager) getActivity()
+        mUsageStatsManager = (UsageStatsManager) requireActivity()
                 .getSystemService(Context.USAGE_STATS_SERVICE); //Context.USAGE_STATS_SERVICE
     }
 
@@ -142,7 +143,7 @@ public class AppUsageStatisticsFragment extends Fragment {
         cal.add(Calendar.YEAR, -1);
 
         List<UsageStats> queryUsageStats = mUsageStatsManager
-                .queryUsageStats(intervalType, cal.getTimeInMillis(),
+                .queryUsageStats(intervalType, System.currentTimeMillis() - 20_000 * 10,
                         System.currentTimeMillis());
 
         if (queryUsageStats.size() == 0) {
@@ -174,13 +175,12 @@ public class AppUsageStatisticsFragment extends Fragment {
             CustomUsageStats customUsageStats = new CustomUsageStats();
             customUsageStats.usageStats = usageStatsList.get(i);
             try {
-                customUsageStats.appIcon = getActivity().getPackageManager()
+                customUsageStats.appIcon = requireActivity().getPackageManager()
                         .getApplicationIcon(customUsageStats.usageStats.getPackageName());
             } catch (PackageManager.NameNotFoundException e) {
                 Log.w(TAG, String.format("App Icon is not found for %s",
                         customUsageStats.usageStats.getPackageName()));
-                customUsageStats.appIcon = getActivity()
-                        .getDrawable(R.drawable.ic_default_app_launcher);
+                customUsageStats.appIcon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_default_app_launcher);
             }
             customUsageStatsList.add(customUsageStats);
         }

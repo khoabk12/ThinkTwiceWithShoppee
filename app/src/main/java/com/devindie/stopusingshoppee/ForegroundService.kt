@@ -23,8 +23,9 @@ class ForegroundService : Service() {
 
         // create an instance of Window class
         // and display the content on screen
-        val window = Window(this)
-        window.open()
+//        val window = Window(this)
+//        window.open()
+//        Toast.makeText(applicationContext, "OVERLAY", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
