@@ -4,15 +4,21 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.app.usage.UsageEvents
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import java.lang.System.currentTimeMillis
+import java.util.*
 
 
 class ForegroundService : Service() {
-    override fun onBind(intent: Intent?): IBinder {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
 
     override fun onCreate() {
@@ -28,8 +34,27 @@ class ForegroundService : Service() {
 //        Toast.makeText(applicationContext, "OVERLAY", Toast.LENGTH_SHORT).show()
     }
 
+    private val systemService: UsageStatsManager by lazy {
+        ContextCompat.getSystemService(
+            this,
+            UsageStatsManager::class.java
+        ) as UsageStatsManager
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                logForegroundApps()
+            }
+        }, 0, 500)
+        return START_STICKY
+    }
+
+    private fun logForegroundApps() {
+        val queryEvents: UsageEvents =
+            systemService.queryEvents(currentTimeMillis(), currentTimeMillis() - 10_000 * 10)
+//        val event = UsageEvents.Event()
+        Log.e("has new Event?: ",queryEvents.hasNextEvent().toString())
     }
 
     // for android version >=O we need to create
