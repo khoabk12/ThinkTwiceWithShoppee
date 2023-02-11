@@ -53,7 +53,6 @@ class ForegroundService : Service() {
     private fun logForegroundApps() {
         val queryEvents: UsageEvents =
             systemService.queryEvents(currentTimeMillis(), currentTimeMillis() - 10_000 * 10)
-//        val event = UsageEvents.Event()
         Log.e("has new Event?: ",queryEvents.hasNextEvent().toString())
     }
 

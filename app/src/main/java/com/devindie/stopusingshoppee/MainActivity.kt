@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        startOverlayService()
+//        startOverlayService()
     }
 
     private fun checkOverlayPermission() {

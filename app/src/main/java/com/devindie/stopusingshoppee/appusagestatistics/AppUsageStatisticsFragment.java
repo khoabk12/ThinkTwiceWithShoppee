@@ -16,12 +16,12 @@
 
 package com.devindie.stopusingshoppee.appusagestatistics;
 
+import android.app.ActivityManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -44,7 +44,6 @@ import com.devindie.stopusingshoppee.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -62,6 +61,8 @@ public class AppUsageStatisticsFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     Button mOpenUsageSettingButton;
     Spinner mSpinner;
+
+    Button mButtonTest;
 
     /**
      * Use this factory method to create a new instance of
@@ -125,6 +126,14 @@ public class AppUsageStatisticsFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        mButtonTest = rootView.findViewById(R.id.button_test);
+        mButtonTest.setOnClickListener(v -> {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        });
     }
 
     /**
@@ -180,7 +189,7 @@ public class AppUsageStatisticsFragment extends Fragment {
             } catch (PackageManager.NameNotFoundException e) {
                 Log.w(TAG, String.format("App Icon is not found for %s",
                         customUsageStats.usageStats.getPackageName()));
-                customUsageStats.appIcon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_default_app_launcher);
+                customUsageStats.appIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_default_app_launcher);
             }
             customUsageStatsList.add(customUsageStats);
         }
