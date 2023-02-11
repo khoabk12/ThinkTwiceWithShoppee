@@ -16,12 +16,12 @@
 
 package com.devindie.stopusingshoppee.appusagestatistics;
 
-import android.app.ActivityManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -63,6 +63,8 @@ public class AppUsageStatisticsFragment extends Fragment {
     Spinner mSpinner;
 
     Button mButtonTest;
+
+    Button mButtonDonate;
 
     /**
      * Use this factory method to create a new instance of
@@ -134,6 +136,21 @@ public class AppUsageStatisticsFragment extends Fragment {
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startMain);
         });
+
+        mButtonDonate = rootView.findViewById(R.id.button_momo);
+        mButtonDonate.setOnClickListener(v -> {
+            Intent intent = new Intent (Intent.ACTION_VIEW);
+            String directUrl = "momo://?action=p2p&extra={\"dataExtract\":\"eyJ1c2VySWQiOiIqKioqKioqKjk2NSIsIm5hbWUiOiJOR1VZRU4gREFORyBLSE9BIiwiYW1vdW50IjowLjAsInRyYW5zZmVyU291cmNlIjoidHJhbnNmZXJfdmlhX2xpbmsiLCJhZ2VudElkIjozNjk3OTYxNSwicmVjZWl2ZXJUeXBlIjoiMTQiLCJlbmFibGVFZGl0QW1vdW50Ijp0cnVlfQ==\"}&url=https://momo.vn/download&serviceCode=transfer_p2p&refId=TransferInputMoney";
+            intent.setData(Uri.parse(directUrl));
+
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
     /**
