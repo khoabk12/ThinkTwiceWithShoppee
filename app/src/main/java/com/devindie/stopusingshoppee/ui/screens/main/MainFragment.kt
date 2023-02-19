@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.devindie.stopusingshoppee.R
+import com.devindie.stopusingshoppee.ui.screens.base.BaseFragment
+import com.devindie.stopusingshoppee.ui.screens.base.BaseViewModel
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment<MainViewModel>() {
 
     companion object {
         fun newInstance() = MainFragment()
     }
-
-    private val viewModel : MainViewModel by viewModels()
-
+    override val viewModel: MainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    }
 
+    }
 
 }
