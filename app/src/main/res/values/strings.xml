@@ -24,4 +24,6 @@
     <string name="str_buy_me_a_coffee">Buy me a coffee</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toggle_fullscreen">Long click to toggle fullscreen</string>
+    <string name="press_back_again_to_exit">Press back again to exit</string>
 </resources>

@@ -5,20 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import com.devindie.stopusingshoppee.R
-import com.devindie.stopusingshoppee.ui.screens.main.MainViewModel
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<T : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
+    private var _viewBinding: VB? = null
+    protected val viewBinding get() = _viewBinding!!
+    abstract val viewModel: VM
+    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
-    abstract val viewModel: T
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_base, container, false)
+        _viewBinding = bindingInflater.invoke(inflater, container, false)
+        return requireNotNull(_viewBinding).root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewCreated(view, savedInstanceState)
+    }
+
+    abstract fun setupViewCreated(view: View, savedInstanceState: Bundle?)
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 }
