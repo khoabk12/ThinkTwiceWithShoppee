@@ -1,4 +1,4 @@
-package com.devindie.stopusingshoppee.distractiongame.a2048;
+package com.devindie.stopusingshoppee.distractiongame.a2048html;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences.Editor;
@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -22,8 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.devindie.stopusingshoppee.R;
 
 import java.util.Locale;
-
-//import de.cketti.changelog.dialog.DialogChangeLog;
 
 public class Game2048Activity extends AppCompatActivity {
 
@@ -43,7 +40,7 @@ public class Game2048Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Don't show an action bar or title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // Enable hardware acceleration
         getWindow().setFlags(LayoutParams.FLAG_HARDWARE_ACCELERATED,
@@ -83,8 +80,6 @@ public class Game2048Activity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
-        settings.setRenderPriority(RenderPriority.HIGH);
-        settings.setDatabasePath(getFilesDir().getParentFile().getPath() + "/databases");
 
         // If there is a previous instance restore it in the webview
         if (savedInstanceState != null) {

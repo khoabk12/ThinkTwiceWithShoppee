@@ -57,11 +57,15 @@
         </activity>
 
         <activity
-            android:name=".distractiongame.a2048.Game2048Activity"
+            android:name=".distractiongame.a2048html.Game2048Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".distractiongame.twozerogame.MainActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
     </application>
 
 </manifest>
