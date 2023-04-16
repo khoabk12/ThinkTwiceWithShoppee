@@ -95,4 +95,10 @@ class MainViewModel : BaseViewModel() {
          * ask them if they less stress now
          */
     }
+
+    fun donate() {
+        /**
+         * Check if Momo is install => open deeplink MOMO with xx vnd
+         */
+    }
 }
