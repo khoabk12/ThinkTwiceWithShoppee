@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
-import com.devindie.stopusingshoppee.appusagestatistics.AppUsageStatisticsFragment
+import com.devindie.stopusingshoppee.ui.screens.main.MainFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,18 +16,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Test StatUsageManager
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.container, AppUsageStatisticsFragment.newInstance())
-                .commit()
-        }
+//        //Test StatUsageManager
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                .add(R.id.container, AppUsageStatisticsFragment.newInstance())
+//                .commit()
+//        }
+//
+//        //Test Overlay
+//        checkOverlayPermission()
+////        startOverlayService()
+//
+//        checkOptimizingBattery()
 
-        //Test Overlay
-        checkOverlayPermission()
-//        startOverlayService()
+        inflateMainFragment()
+    }
 
-        checkOptimizingBattery()
+    private fun inflateMainFragment() {
+        supportFragmentManager.beginTransaction().add(R.id.container,MainFragment.newInstance()).commit()
     }
 
     private fun checkOptimizingBattery() {
@@ -53,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        startOverlayService()
+//        startOverlayService()
     }
 
     private fun checkOverlayPermission() {

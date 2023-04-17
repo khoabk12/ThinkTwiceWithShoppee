@@ -11,7 +11,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
             Log.e("RECEIVE BOOT","START FOREGROUND SERVICE NOW")
-            ContextCompat.startForegroundService(it, Intent(it, ForegroundService::class.java))
+//            ContextCompat.startForegroundService(it, Intent(it, ForegroundService::class.java))
         }
     }
 }

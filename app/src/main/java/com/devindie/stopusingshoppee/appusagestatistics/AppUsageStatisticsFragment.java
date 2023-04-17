@@ -21,7 +21,7 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -44,7 +44,6 @@ import com.devindie.stopusingshoppee.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -62,6 +61,10 @@ public class AppUsageStatisticsFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     Button mOpenUsageSettingButton;
     Spinner mSpinner;
+
+    Button mButtonTest;
+
+    Button mButtonDonate;
 
     /**
      * Use this factory method to create a new instance of
@@ -125,6 +128,29 @@ public class AppUsageStatisticsFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        mButtonTest = rootView.findViewById(R.id.button_test);
+        mButtonTest.setOnClickListener(v -> {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        });
+
+        mButtonDonate = rootView.findViewById(R.id.button_momo);
+        mButtonDonate.setOnClickListener(v -> {
+            Intent intent = new Intent (Intent.ACTION_VIEW);
+            String directUrl = "momo://?action=p2p&extra={\"dataExtract\":\"eyJ1c2VySWQiOiIqKioqKioqKjk2NSIsIm5hbWUiOiJOR1VZRU4gREFORyBLSE9BIiwiYW1vdW50IjowLjAsInRyYW5zZmVyU291cmNlIjoidHJhbnNmZXJfdmlhX2xpbmsiLCJhZ2VudElkIjozNjk3OTYxNSwicmVjZWl2ZXJUeXBlIjoiMTQiLCJlbmFibGVFZGl0QW1vdW50Ijp0cnVlfQ==\"}&url=https://momo.vn/download&serviceCode=transfer_p2p&refId=TransferInputMoney";
+            intent.setData(Uri.parse(directUrl));
+
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
     /**
@@ -180,7 +206,7 @@ public class AppUsageStatisticsFragment extends Fragment {
             } catch (PackageManager.NameNotFoundException e) {
                 Log.w(TAG, String.format("App Icon is not found for %s",
                         customUsageStats.usageStats.getPackageName()));
-                customUsageStats.appIcon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_default_app_launcher);
+                customUsageStats.appIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_default_app_launcher);
             }
             customUsageStatsList.add(customUsageStats);
         }
