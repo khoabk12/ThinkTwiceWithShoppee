@@ -79,10 +79,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (Settings.canDrawOverlays(this)) {
-                    disablePullNotificationTouch()
-                }
+            if (Settings.canDrawOverlays(this)) {
+                disablePullNotificationTouch()
             }
         }
     }
